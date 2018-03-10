@@ -12,12 +12,16 @@ import { AgregarComponent } from "../pages/agregar/agregar.component";
 //Servicios
 import { ListaDeseosService } from "./services/listadeseos.service";
 
+//Pipes
+import { PlaceholderPipe } from "./pipes/placeholder.pipe";
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
   declarations: [
     MyApp,
+    PlaceholderPipe,
     TabsPage,
     PendientesComponent,
     TerminadosComponent,
