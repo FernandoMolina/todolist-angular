@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, NavController } from 'ionic-angular';
 
 import { Lista } from "../../app/clases/listas";
 import { ListaItem } from "../../app/clases/lista-item";
+
+import { ListaDeseosService } from '../../app/services/listadeseos.service';
 
 @Component({
   selector: 'app-agregar',
@@ -9,12 +12,16 @@ import { ListaItem } from "../../app/clases/lista-item";
 })
 export class AgregarComponent implements OnInit {
 
-  nombreLista: string;
+  nombreLista: string = "";
   nombreItem: string = "";
 
   items: ListaItem[] = [];
 
-  constructor() { }
+  constructor(
+    public alertCtrl: AlertController,
+    public navCtrl: NavController,
+    public _listaDeseos: ListaDeseosService
+  ) { }
 
   ngOnInit() { }
 
@@ -32,6 +39,25 @@ export class AgregarComponent implements OnInit {
 
   borrarItem( idx: number ){
     this.items.splice(idx,1);
+  }
+
+  guardarLista() {
+    if ( this.nombreLista.length == 0) {
+      let alert = this.alertCtrl.create({
+      title: 'Nombre de la Lista!',
+      subTitle: 'El nombre de la lista es necesario.',
+      buttons: ['OK']
+      });
+      alert.present();
+      return;
+    }
+
+    let lista = new Lista( this.nombreLista );
+    lista.items = this.items;
+
+    //this._listaDeseos.listas.push( lista );
+    this._listaDeseos.agregarLista( lista );
+    this.navCtrl.pop();
   }
 
 }
